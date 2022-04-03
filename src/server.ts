@@ -36,7 +36,7 @@ import { RSA_NO_PADDING } from 'constants';
   
   // Root Endpoint
   // Displays a simple message to the user
-  app.get( "/filteredimage", async ( req, res ) => {
+  app.get( "/filteredimage", async ( req:express.Request, res:express.Response ) => {
     var validUrl = require('valid-url');
     if(!validUrl.isUri(req.query.image_url)){
       res.statusCode = 500;
@@ -44,6 +44,7 @@ import { RSA_NO_PADDING } from 'constants';
     }else{
       let result = await filterImageFromURL(req.query.image_url);
       var onFinished= require('on-finished');
+      res.statusCode = 200;
       res.sendFile(result);
       onFinished(res, () =>{
         var files = new Array();
